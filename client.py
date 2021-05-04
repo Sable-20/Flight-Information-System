@@ -44,7 +44,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
             print(f"Flights coming from city {city}: ")
             print(msg)
-        elif choice.startswith("details ") and len(choice) == 13:
+        elif choice.startswith("details ") and len(choice) >= 13:
             myutils.SendMessage(choice, sock)
             flight = choice[8:]
             msg = myutils.ReceiveMessage(sock)

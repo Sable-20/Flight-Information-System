@@ -3,7 +3,7 @@ import threading
 import os
 import json
 
-import myutils
+import thread
 
 from urllib.error import HTTPError
 from urllib.request import urlopen, urlretrieve
@@ -25,9 +25,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock_p:
     numOfThreads = 0
 
     while True:
-        if len(threadList) > 2:
+        if numOfThreads > 2:
             continue
 
         sock_a, sockname = sock_p.accept()
-        thread = myutils.Thread(sock_a, sockname, api_key)
-        thread.StartThread()
+        t = thread.Thread(sock_a, sockname, api_key)
+        t.StartThread()
