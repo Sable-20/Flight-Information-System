@@ -21,6 +21,8 @@ class Thread:
         thread.start()
 
     def ThreadFunctionality(self):
+        myutils.SendMessage("message received", self.sock)  # tell the client that server accepted the connection
+        
         clientName = myutils.ReceiveMessage(self.sock)
         print(f"{clientName} has connected.")
 
@@ -105,3 +107,5 @@ class Thread:
                 msg += 20*"-" + "\n"
             
             myutils.SendMessage(msg, self.sock)
+
+            os.remove(f"./JSON/group_11_{clientName}.json")

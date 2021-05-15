@@ -1,5 +1,6 @@
 import socket
 import myutils
+import sys
 
 
 print(10*"-" + "Flight Information System" + 10*"-")
@@ -9,7 +10,17 @@ name = input("Enter your name: ")
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     sock.connect(server_address)
+    sock.settimeout(5)
+
+    #verify if connection was successful at all
+    try:
+        myutils.ReceiveMessage(sock)
+    except:
+        print("Connection request timed out. The server might be overloaded.\nQuitting application.")
+        sys.exit()
+        
     myutils.SendMessage(name.strip(), sock)
+
     while True:
         airportCode = input("Enter an airport code (icao): ")
         myutils.SendMessage(airportCode.strip(), sock)
