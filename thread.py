@@ -54,12 +54,12 @@ class Thread:
 
                 for flight in json_data['data']:
                     if flight['flight_status'] == 'landed':
-                        msg += 20*"-" + "\n"
-                        msg += f"Flight IATA code:  {flight['flight']['iata'] } \n"
-                        msg += f"Departure Airport: { flight['departure']['airport'] } \n"
-                        msg += f"Arrival Time: { flight['arrival']['estimated'] } \n"
-                        msg += f"Terminal: { flight['arrival']['terminal'] } \n"
-                        msg += f"Gate: { flight['arrival']['gate'] } \n"
+                        msg +=  20*"-" + "\n" + \
+                                "Flight IATA code:  {} \n".format(flight['flight']['iata']) + \
+                                "Departure Airport: {} \n".format(flight['departure']['airport']) + \
+                                "Arrival Time: {} \n".format(flight['arrival']['estimated']) + \
+                                "Terminal: {} \n".format(flight['arrival']['terminal']) + \
+                                "Gate: {} \n".format(flight['arrival']['gate'])
                 msg += 20*"-" + "\n"
 
             elif choice == "delayed":
@@ -68,13 +68,13 @@ class Thread:
 
                 for flight in json_data['data']:
                     if flight['departure']['delay'] != None and int(flight['departure']['delay']) > 0:
-                        msg += 20*"-" + "\n"
-                        msg += f"Flight IATA code: { flight['flight']['iata'] } \n"
-                        msg += f"Departure Airport: { flight['departure']['airport'] } \n"
-                        msg += f"Departure Scheduled Time: { flight['departure']['scheduled'] } \n"
-                        msg += f"Estimated Arrival Time: { flight['arrival']['estimated'] } \n"
-                        msg += f"Terminal: { flight['arrival']['terminal'] } \n"
-                        msg += f"Gate: { flight['arrival']['gate'] } \n"
+                        msg +=  20*"-" + "\n" + \
+                                "Flight IATA code: {} \n".format(flight['flight']['iata']) + \
+                                "Departure Airport: {} \n".format(flight['departure']['airport']) + \
+                                "Departure Scheduled Time: {} \n".format(flight['departure']['scheduled']) + \
+                                "Estimated Arrival Time: {} \n".format(flight['arrival']['estimated']) + \
+                                "Terminal: {} \n".format(flight['arrival']['terminal']) + \
+                                "Gate: {} \n".format(flight['arrival']['gate'])
                 msg += 20*"-" + "\n"
 
             elif choice.startswith("city"):
@@ -84,13 +84,13 @@ class Thread:
 
                 for flight in json_data['data']:
                     if flight['departure']['iata'] == code.upper():
-                        msg += 20*"-" + "\n"
-                        msg += f"Flight IATA code: { flight['flight']['iata'] }\n"
-                        msg += f"Departure Airport: { flight['departure']['airport'] } \n"
-                        msg += f"Departure Time: { flight['departure']['scheduled'] } \n"
-                        msg += f"Estimated Arrival Time: { flight['arrival']['estimated'] } \n"
-                        msg += f"Terminal: { flight['arrival']['terminal'] } \n"
-                        msg += f"Gate: { flight['arrival']['gate'] } \n"
+                        msg +=  20*"-" + "\n" + \
+                                "Flight IATA code: {}\n".format(flight['flight']['iata']) + \
+                                "Departure Airport: {} \n".format(flight['departure']['airport']) + \
+                                "Departure Time: {} \n".format(flight['departure']['scheduled']) + \
+                                "Estimated Arrival Time: {} \n".format(flight['arrival']['estimated']) + \
+                                "Terminal: {} \n".format(flight['arrival']['terminal']) + \
+                                "Gate: {} \n".format(flight['arrival']['gate'])
                 msg += 20*"-" + "\n"
 
             elif choice.startswith("details"):
@@ -101,16 +101,22 @@ class Thread:
                 for flight in json_data['data']:
                     
                     if flight['flight']['iata'] == code.upper():
-                        msg += 20*"-" + "\n"
-                        msg += f"Flight IATA code: { flight['flight']['iata'] }\n"
-                        msg += f"Flight Date: { flight['flight_date'] }\n"
-                        msg += f"Departure:\n\tAirport: { flight['departure']['airport'] }\n\tGate: { flight['departure']['gate'] }\n\tTerminal: { flight['departure']['terminal'] }\n"
-                        msg += f"Arrival:\n\tAirport: { flight['arrival']['airport'] }\n\tGate: { flight['arrival']['gate'] }\n\tTerminal: { flight['arrival']['terminal'] }\n"
-                        msg += f"Flight Status: { flight['flight_status'] }\n"
-                        msg += f"Scheduled Departure Time: { flight['departure']['scheduled'] }\n"
-                        msg += f"Scheduled Arrival Time: { flight['arrival']['scheduled'] }\n"
-                        msg += f"Estimated Arrival Time: { flight['arrival']['estimated'] }\n"
-                        msg += f"Delay: { flight['departure']['delay'] } minutes\n"
+                        msg +=  20*"-" + "\n" + \
+                                "Flight IATA code: {}\n".format(flight['flight']['iata']) + \
+                                "Flight Date: {}\n".format(flight['flight_date']) + \
+                                "Departure:\n" + \
+                                    "\tAirport: {}\n".format(flight['departure']['airport']) + \
+                                    "\tGate: {}\n".format(flight['departure']['gate']) + \
+                                    "\tTerminal: {}\n".format(flight['departure']['terminal']) + \
+                                "Arrival:\n" + \
+                                    "\tAirport: {}\n".format(flight['arrival']['airport']) + \
+                                    "\tGate: {}\n".format(flight['arrival']['gate']) + \
+                                    "\tTerminal: {}\n".format(flight['arrival']['terminal']) + \
+                                "Flight Status: {}\n".format(flight['flight_status']) + \
+                                "Scheduled Departure Time: {}\n".format(flight['departure']['scheduled']) + \
+                                "Scheduled Arrival Time: {}\n".format(flight['arrival']['scheduled']) + \
+                                "Estimated Arrival Time: {}\n".format(flight['arrival']['estimated']) + \
+                                "Delay: {} minutes\n".format(flight['departure']['delay'])
                         break
                 msg += 20*"-" + "\n"
             
