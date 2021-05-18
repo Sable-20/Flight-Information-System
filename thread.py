@@ -4,7 +4,7 @@ import os
 import json
 from urllib.request import urlretrieve
 
-import myutils      # myutils.py
+import myutils
 
 class Thread:
     sock = None
