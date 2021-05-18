@@ -12,11 +12,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     sock.connect(server_address)
     sock.settimeout(5)
 
-    #verify if connection was successful at all
+    # verify if server accepted connection
     try:
         myutils.ReceiveMessage(sock)
     except:
-        print("Connection request timed out. The server might be overloaded.\nQuitting application.")
+        print("Connection request timed out. The server might be overloaded, try again later.\nQuitting application.")
         sys.exit()
         
     myutils.SendMessage(name.strip(), sock)
@@ -38,16 +38,19 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         if choice == 'quit':
             myutils.SendMessage(choice, sock)
             break
+
         elif choice == 'arrived':
             myutils.SendMessage(choice, sock)
             msg = myutils.ReceiveMessage(sock)
             print(f"Arrived flights at airport {airportCode}: ")
             print(msg)
+
         elif choice == 'delayed':
             myutils.SendMessage(choice, sock)
             msg = myutils.ReceiveMessage(sock)
             print(f"Delayed flights at airport {airportCode}: ")
             print(msg)
+
         elif choice.startswith("city ") and len(choice) == 8:
             myutils.SendMessage(choice, sock)
             city = choice[5:]
@@ -55,6 +58,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
             print(f"Flights coming from city {city}: ")
             print(msg)
+
         elif choice.startswith("details ") and len(choice) >= 13:
             myutils.SendMessage(choice, sock)
             flight = choice[8:]
@@ -62,6 +66,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
             print(f"Details of flight {flight}:")
             print(msg)
+            
         else:
             print("Option not available or wrong use of syntax.")
     
