@@ -1,7 +1,4 @@
-import socket
-import threading
-import os
-import json
+import socket, threading, os, json 
 from urllib.request import urlretrieve
 
 import myutils
@@ -23,6 +20,7 @@ class Thread:
     def ThreadFunctionality(self):
         myutils.SendMessage("connection accepted", self.sock)  # tell the client that server accepted the connection
         
+        # allowing the client to recieve messages from the opened socket connection
         clientName = myutils.ReceiveMessage(self.sock)
         print(f"{clientName} has connected.")
 
@@ -40,20 +38,25 @@ class Thread:
 
             choice = myutils.ReceiveMessage(self.sock)
 
+            # loggign when the client quites
             if choice == "quit":
                 print(f"{clientName} has disconnected")
                 os.remove(f"./JSON/group_11_{clientName}.json")
                 break
             
+            # opening log files
             with open(f"./JSON/group_11_{clientName}.json", 'r') as f:
                 json_data = json.load(f)
             
+            # logging if the client arrived / when + further info
             if choice == "arrived":
                 msg = ""
                 print(f"{clientName} has requested a list of all arrived flights.")
 
                 for flight in json_data['data']:
+                    # making sure hte flight has landed
                     if flight['flight_status'] == 'landed':
+                        # formatting
                         msg +=  20*"-" + "\n" + \
                                 "Flight IATA code:  {} \n".format(flight['flight']['iata']) + \
                                 "Departure Airport: {} \n".format(flight['departure']['airport']) + \
@@ -62,6 +65,7 @@ class Thread:
                                 "Gate: {} \n".format(flight['arrival']['gate'])
                 msg += 20*"-" + "\n"
 
+            # logging delayed info
             elif choice == "delayed":
                 msg = ""
                 print(f"{clientName} has requested a list of all delayed flights.")
@@ -77,6 +81,7 @@ class Thread:
                                 "Gate: {} \n".format(flight['arrival']['gate'])
                 msg += 20*"-" + "\n"
 
+            # logging city info
             elif choice.startswith("city"):
                 code = choice[5:]
                 msg = ""
@@ -93,6 +98,7 @@ class Thread:
                                 "Gate: {} \n".format(flight['arrival']['gate'])
                 msg += 20*"-" + "\n"
 
+            # more formatting if its the details
             elif choice.startswith("details"):
                 code = choice[8:]
                 msg = ""

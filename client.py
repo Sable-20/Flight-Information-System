@@ -15,12 +15,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     # verify if server accepted connection
     try:
         myutils.ReceiveMessage(sock)
-    except:
-        print("Connection request timed out. The server might be overloaded, try again later.\nQuitting application.")
+    except Exception as err:
+        print("Connection request timed out. The server might be overloaded, try again later.\nQuitting application.\n\n " + err)
         sys.exit()
         
     myutils.SendMessage(name.strip(), sock)
 
+    # loop of death aka infinite while loop
     while True:
         airportCode = input("Enter an airport code (icao): ")
         myutils.SendMessage(airportCode.strip(), sock)
@@ -35,6 +36,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         choice = input("Choose an option: ")
         choice = choice.lower().strip()
 
+        # more logic checking if they quit... etc
         if choice == 'quit':
             myutils.SendMessage(choice, sock)
             break
@@ -67,6 +69,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             print(f"Details of flight {flight}:")
             print(msg)
             
+        # this is here cause in QA they try everything but what actually breaks things
         else:
             print("Option not available or wrong use of syntax.")
     

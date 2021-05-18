@@ -3,7 +3,7 @@ import socket
 import thread   # thread.py
 
 server_address = ("127.0.0.1", 59420)
-api_key = "04c2fe7409f870cddc889cad96d458c9"
+api_key = "04c2fe7409f870cddc889cad96d458c9" # 59 put this in a fucking .env or json file or something
 
 print(10*"=" + "Server has started" + "="*10)
 
